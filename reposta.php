@@ -9,10 +9,19 @@
   <body>
     <h1>Resposta</h1>
     <?php
-        $valor1 = $_POST['valor1'];
-        $valor2 = $_POST['valor2'];
-        $soma = $valor1 + $valor2;
-        echo "o valor da soma é: $soma";
+        if($_SERVER['REQUEST_METHOD']=='POST'){// ESSE VAI TER EM TODOS OS EXERCICIOS
+            try{
+                $valor1 = $_POST['valor1'];
+                $valor2 = $_POST['valor2'];
+                $soma = $valor1 + $valor2;
+                echo "o valor da soma é: $soma";
+                $div = $valor1 / $valor2;
+                $mult = $valor1 * $valor2;
+                //resto divisão = %
+            } catch(Exception $e){ 
+                echo $e->getMessage();
+            }
+        }
     ?>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
   </body>
