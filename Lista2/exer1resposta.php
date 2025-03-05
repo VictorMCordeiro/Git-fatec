@@ -18,7 +18,7 @@
                     echo "o primeiro valor é: $valor1 ";
                     echo "o segundo  valor é: $valor2 ";
                 } catch(Exception $e){ 
-                    echo $e->getMessage();
+                    echo $e->getMessage();// tratamento de exceções
                 }
             }
         ?>
