@@ -25,7 +25,7 @@
             <?php endfor; ?>
         </div>
 
-        <button type="submit" class="btn btn-primary">Calcular</button>
+        <button type="submit" class="btn btn-primary">Ler</button>
 
     </form>
 
