@@ -12,7 +12,10 @@
 
     <form method="post" class="mb-3" action="ex1res.php">
         <div class="row">
-            <?php for ($i = 1; $i <= 7; $i++): ?>
+        
+            <?php 
+            //repetição para criar os dois campos de entrada, se modificar o 7 para qualquer outro numero, indicara a qtd de repetição, e i=1 significa indice partindo do 1 e nao 0
+                for ($i = 1; $i <= 7; $i++): ?>
             
                 <div class="mb-3 col-1">
                     <label for="num<?= $i ?>" class="form-label">N°Pos <?= $i ?>:</label>
