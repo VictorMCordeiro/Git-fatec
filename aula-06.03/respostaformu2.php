@@ -1,33 +1,39 @@
+<?php //todas com tipo definido
+    declare(strict_types=1);
+?>
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Bootstrap demo</title>
+    <title>aula 06-03</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
   </head>
   <body class="container mt-4">
-    <h1>Resposta do exercicio 7, lista 3</h1>
+    <h1>Resposta 2 formulario da aula 06-03</h1>
         <?php
+            function manipularString($palavra) : void
+            {
+                echo" A palavra possui ". strlen($palavra) ." caracteres ";
+                echo" Letra A substituida por 4: ".str_replace("a","4", $palavra);
+            }
+           
+            function gerarValorAleatorio(int $inicial, int $final) : int
+            {
+                return rand($inicial, $final);
+            }
             if($_SERVER['REQUEST_METHOD']=='POST') // ESSE VAI TER EM TODOS OS EXERCICIOS
             {
                 try
                 {
-                    $valor = $_POST['n'];     
-                   
                     echo "<div class='alert alert-success'><strong>Solução:</strong><br>";
-                    echo "Números somados de 1 até $valor: ";
-                    //declarar antes para o while
-                    $somas = 0;
-                    $i = 1;
-                    while ($i <= $valor)
-                    {
-                        $somas += $i;
-                        $i++;
-                    }  
-                    echo " $somas"; 
-                    
-                }
+                    $palavra = $_POST["p"];//nativa php pra transformar em int
+                    manipularString(strtolower(($palavra)));
+                    $valor = gerarValorAleatorio(1 , 20);
+                    echo"<p>O valor gerado foi: $valor</p>";
+                    $numero = 5.555555;
+                    echo"<p> Monstrando duas casas decimais: ".number_format($numero , 2, "," , ".")."</p>";
+                }               
                 catch(Exception $e)
                 { 
                     echo "<div class='alert alert-danger'>Erro: " . $e->getMessage() . "</div>";

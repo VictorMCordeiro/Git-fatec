@@ -18,7 +18,7 @@
                     $fatorial = 1;
                     for ($i = 1; $i <= $num; $i++) 
                     {
-                        $fatorial = $fatorial * $i;
+                        $fatorial *= $i;
                     }
                     {
                         echo "a fatoria de $num é :$fatorial";

@@ -15,20 +15,21 @@
                 {
                     $numeros = [];
                 
-                    // Lendo números
+                    // Lendo numeros
                     for ($i = 1; $i <= 7; $i++) 
                     {
                         // se precisar converter float $numeros[] = floatval($_POST['num' . $i]);//conversão para float
                         $numeros[] =$_POST['num' . $i];
                     }
                     
-                    // Encontrando posição e menor 
+                    // Encontrando posição e menor dentre elas 
                     $menor_valor = $numeros[0];
                     $posicao = 1;
                     
                     for ($i = 1; $i < count($numeros); $i++) 
                     {
-                        if ($numeros[$i] < $menor_valor) {
+                        if ($numeros[$i] < $menor_valor)
+                        {
                             $menor_valor = $numeros[$i];
                             $posicao = $i + 1; // Ajustando  posição iniciar em 1 + 1
                         }

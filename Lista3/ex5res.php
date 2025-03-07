@@ -19,7 +19,7 @@
                     $nome_mes= "";                 
 
                     if($numero  > 12 || $numero < 1) 
-                    {//o codigo abaixo é uma maneira de encerrar o codigo , recomendado usar com if
+                    {//encerrar o codigo , recomendado usar com if
                         throw new Exception("numero invalido");
                     }                    
                     
