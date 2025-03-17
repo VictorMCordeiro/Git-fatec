@@ -10,11 +10,11 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
   </head>
   <body class="container mt-4">
-    <h1>Resposta 5 formulario 4</h1>
+    <h1>Resposta 6 formulario 4</h1>
         <?php 
-            function Raiz(float $valor): void 
+            function arredondaNumero(float $numero): float 
             {
-              echo"A raiz quadrada de $valor é: ".$valor * $valor;
+              return round($numero);
             }
     
             if ($_SERVER['REQUEST_METHOD'] == 'POST') 
@@ -22,9 +22,9 @@
               try 
               {
                 echo "<div class='alert alert-success'><strong>Solução:</strong><br>";
-                $d1 =floatval($_POST['d']);
-               
-                Raiz($d1);
+                $num = floatval($_POST['numero']);
+                $solucao = arredondaNumero($num);
+                echo "o numero arrendodado para $solucao";
     
               } catch(Exception $e){
                   echo $e->getMessage();
