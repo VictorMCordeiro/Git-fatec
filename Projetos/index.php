@@ -35,12 +35,13 @@
         <?$mensagem['erro']?>
     </div>
     <?php endif; ?>
-    <?php if ((isset($_GET['mensagem'])) && ($_GET['mensagem'] == "acesso_negado"))
-    <div class="alert alert-danger mt-3 mb-3">
-        <?$mensagem['erro']?>
-    </div>
+    <?php if (isset($mensagem['erro'])): ?>
+        <div class="alert alert-danger mt-3 mb-3">
+            <?= $mensagem['erro'] ?>
+        </div>
+        
     <?php endif; ?>
-    <form method="post" action ="">   
+    <form method="post" action ="principal.php">   
             <div class="row">        
                 <div class="mb-3 col-3">
                     <label for="email" class="form-label">Informe o email: </label>
