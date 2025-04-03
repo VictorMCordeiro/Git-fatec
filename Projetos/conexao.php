@@ -1,13 +1,13 @@
 <?php
-    declare(strict_types=1);
 
-    $dominio = 'mysql:localhost;dbname=projetophp';
-    $usuario = 'root';
-    $senha = '';
+declare(strict_types=1);
 
-    try{
-        $pdo = New PDO($dominio, $usuario, $senha);   
-    } catch(PDOException $e){
-        die("ERROR ao conectar com banco!".$e->getMessage());
-    }
-?>
+$dominio = 'mysql:host=localhost;dbname=projetophp';
+$usuario = 'root';
+$senha = '';
+
+try {
+    $pdo = new PDO($dominio, $usuario, $senha);
+} catch (PDOException $e){
+    die("Erro ao conectar com o banco! ".$e->getMessage());
+}

@@ -15,14 +15,15 @@
             try{
                 $email = $_POST['email'];
                 $senha = $_POST['senha'];
-                $stmt = $pdo->prepare('SELECT * FROM ususario WHERE email = ?');
+                $stmt = $pdo->prepare('SELECT * FROM usuarios WHERE email = ?');
                 $stmt->execute([$email]);
                 $ususario = $stmt->fetch(PDO::FETCH_ASSOC);
                 if ($usuario && password_verify($senha, $ususario['senha'])){
                     session_start();
                     $_SESSION['usuario'] = $ususario['nome'];
                     $_SESSION['acesso'] = true;
-                    header()
+                    $_SESSION['id'] = $usuario ['id'];
+                    header('localtion: principal.php');
                 }
 
 
