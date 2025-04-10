@@ -11,21 +11,56 @@
   </head>
   <body class="container mt-4">
     <h1>Resposta 1 LISTA 5</h1>
+    <?php if ($_SERVER['REQUEST_METHOD'] == "POST"): ?>
         <?php
-            
-            if($_SERVER['REQUEST_METHOD']=='POST') // ESSE VAI TER EM TODOS OS EXERCICIOS
-            {
-                try
-                {
-                    echo "<div class='alert alert-success'><strong>Solução:</strong><br>";
-                  
-                }               
-                catch(Exception $e)
-                { 
-                    echo "<div class='alert alert-danger'>Erro: " . $e->getMessage() . "</div>";
+            try {
+                $contatos = [];
+                $nomes = $_POST['nome'] ?? [];
+                $tels = $_POST['tel'] ?? [];
+                $erros = [];
+
+                for ($i = 0; $i < count($nomes); $i++) {
+                    $nome = trim($nomes[$i]);
+                    $tel = trim($tels[$i]);
+                    
+                    if (empty($nome) || empty($tel)) continue;
+                    if (isset($contatos[$nome]) || in_array($tel, $contatos)) {
+                        $erros[] = "Contato duplicado: $nome - $tel";
+                        continue;
+                    }
+                    $contatos[$nome] = $tel;
                 }
-                }
+
+                ksort($contatos);
+            } catch (Exception $e) {
+                $erros[] = "Erro: " . $e->getMessage();
+            }
         ?>
+
+        <?php if (!empty($erros)): ?>
+            <div class="alert alert-danger mt-3">
+                <ul class="mb-0">
+                    <?php foreach ($erros as $erro): ?>
+                        <li><?= htmlspecialchars($erro) ?></li>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
+        <?php endif; ?>
+
+        <?php if (!empty($contatos)): ?>
+            <div class="card mt-4 shadow-lg p-3">
+                <h3 class="text-center text-primary">Lista de Contatos</h3>
+                <ul class="list-group">
+                    <?php foreach ($contatos as $nome => $tel): ?>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <strong><?= htmlspecialchars($nome) ?></strong>
+                            <span class="badge bg-primary"><?= htmlspecialchars($tel) ?></span>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
+        <?php endif; ?>
+    <?php endif; ?>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
   </body>
 </html>
