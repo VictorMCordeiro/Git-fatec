@@ -16,19 +16,25 @@ produtos com preço acima de R$100,00 e exiba a lista ordenada pelo nome
 do produto. </h3>
 
 
-<form method="post" action="ex1res.php">
-    <?php for ($i = 0; $i < 3 ; $i++): ?>
-      <div class="row mb-3">
-        <div class="col-md-4">
-          <input type="text" name="nome[]" class="form-control" placeholder="Nome do contato">
-        </div>
-        <div class="col-md-4">
-          <input type="text" name="telefone[]" class="form-control" placeholder="Telefone do contato">
-        </div>
-      </div>
-    <?php endfor; ?>
-    <button type="submit" class="btn btn-primary">Cadastrar Contatos</button>
-  </form>
+<div class="card shadow-lg p-4">
+        <h2 class="text-center">Cadastro de Produtos</h2>
+        <form action="ex3.php" method="POST" class="row g-3">
+            <?php for ($i = 0; $i < 5; $i++): ?>
+                <div class="col-md-4">
+                    <input type="text" class="form-control" name="codigo[]" placeholder="Código do Produto" required>
+                </div>
+                <div class="col-md-4">
+                    <input type="text" class="form-control" name="nome[]" placeholder="Nome do Produto" required>
+                </div>
+                <div class="col-md-4">
+                    <input type="number" class="form-control" name="preco[]" placeholder="Preço (R$)" step="0.01" min="0" required>
+                </div>
+            <?php endfor; ?>
+            <div class="col-12">
+                <button type="submit" class="btn btn-success w-100">Cadastrar</button>
+            </div>
+        </form>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
   </body>
