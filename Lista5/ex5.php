@@ -1,34 +1,115 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Exemplo 06-03</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-  </head>
-  <body class="container mt-4">
-    <h1>exercicio 5, Lista 5</h1>
-    <h3>Crie um formulário que leia dados de 5 livros: título e quantidade em 
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Livros</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="container mt-5">
+<h1>exercicio 5, Lista 5</h1>
+<h3>Crie um formulário que leia dados de 5 livros: título e quantidade em 
 estoque. Leia os dados e crie um mapa ordenado onde as chaves são os 
 títulos dos livros e os valores são a quantidade em estoque. Verifique se a 
 quantidade em estoque é inferior a 5 e exiba um alerta para os livros com 
 baixa quantidade. Exiba a lista ordenada pelo título dos livros.</h3>
 
+    <div class="card shadow-lg p-4">
+        <h2 class="text-center">Cadastro de Livros</h2>
+        <form action="" method="POST" class="row g-3">
+            <?php for ($i = 0; $i < 5; $i++): ?>
+                <div class="col-md-6">
+                    <input type="text" class="form-control" name="titulo[]" placeholder="Título do Livro" required>
+                </div>
+                <div class="col-md-6">
+                    <input type="number" class="form-control" name="quantidade[]" placeholder="Quantidade em Estoque" min="0" required>
+                </div>
+            <?php endfor; ?>
+            <div class="col-12">
+                <button type="submit" class="btn btn-success w-100">Cadastrar</button>
+            </div>
+        </form>
+    </div>
 
-<form method="post" action="ex1res.php">
-    <?php for ($i = 0; $i < 3 ; $i++): ?>
-      <div class="row mb-3">
-        <div class="col-md-4">
-          <input type="text" name="nome[]" class="form-control" placeholder="Nome do contato">
-        </div>
-        <div class="col-md-4">
-          <input type="text" name="telefone[]" class="form-control" placeholder="Telefone do contato">
-        </div>
-      </div>
-    <?php endfor; ?>
-    <button type="submit" class="btn btn-primary">Cadastrar Contatos</button>
-  </form>
+    <?php
+        if ($_SERVER['REQUEST_METHOD'] === "POST") {
+            try {
+                $resultado = processarLivros($_POST['titulo'] ?? [], $_POST['quantidade'] ?? []);
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-  </body>
+                if (!empty($resultado['erros'])) {
+                    echo "<div class='alert alert-danger mt-3'>";
+                    foreach ($resultado['erros'] as $erro) {
+                        echo "<p>$erro</p>";
+                    }
+                    echo "</div>";
+                } else {
+                    if (!empty($resultado['alerta'])) {
+                        exibirAlertaBaixaQuantidade($resultado['alerta']);
+                    }
+                    exibirTabelaLivros($resultado['lista']);
+                }
+
+            } catch (Exception $e) {
+                echo "<div class='alert alert-danger mt-3'>Erro: " . htmlspecialchars($e->getMessage()) . "</div>";
+            }
+        }
+
+        function processarLivros(array $titulos, array $quantidades): array {
+            $livros = [];
+            $erros = [];
+            $alertaBaixa = [];
+
+            for ($i = 0, $n = count($titulos); $i < $n; $i++) {
+                $titulo = trim(htmlspecialchars((string) ($titulos[$i] ?? '')));
+                $quantidade = intval($quantidades[$i] ?? 0);
+
+                if (empty($titulo)) {
+                    $erros[] = "O título do livro na posição " . ($i + 1) . " está vazio.";
+                    continue;
+                }
+
+                if (isset($livros[$titulo])) {
+                    $erros[] = "O livro '$titulo' já foi cadastrado.";
+                    continue;
+                }
+
+                if ($quantidade < 5) {
+                    $alertaBaixa[] = $titulo;
+                }
+
+                $livros[$titulo] = $quantidade;
+            }
+
+            ksort($livros);
+
+            return ['lista' => $livros, 'alerta' => $alertaBaixa, 'erros' => $erros];
+        }
+
+        function exibirAlertaBaixaQuantidade(array $alerta): void {
+            echo "<div class='alert alert-warning mt-3'>";
+            echo "<h5><strong>Atenção!</strong> Baixa quantidade em estoque:</h5>";
+            echo "<ul>";
+            foreach ($alerta as $livro) {
+                echo "<li><strong>$livro</strong></li>";
+            }
+            echo "</ul>";
+            echo "</div>";
+        }
+
+        function exibirTabelaLivros(array $livros): void {
+            echo "<div class='card mt-4 p-3 shadow-lg'>";
+            echo "<h3 class='text-center mb-3'>Lista de Livros</h3>";
+            echo "<table class='table table-bordered'>";
+            echo "<thead class='table-dark'><tr><th>Título</th><th>Quantidade</th></tr></thead><tbody>";
+
+            foreach ($livros as $titulo => $quantidade) {
+                echo "<tr><td><strong>$titulo</strong></td><td>$quantidade</td></tr>";
+            }
+
+            echo "</tbody></table></div>";
+        }
+    ?>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
 </html>
