@@ -48,3 +48,11 @@
     </nav>
 
     <main class="container">
+      <div>
+        variavel 1 = <input type="text">
+        $a = variavel 1
+        $b = variavel 2
+        $r = a+b
+        <p>$r</p>
+
+      </div>
